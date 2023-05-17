@@ -8,23 +8,54 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+// class Solution {
+// public:
+//     int pairSum(ListNode* head) {
+//         vector<int> vec;
+        
+//         while(head) {
+//             vec.push_back(head->val);
+//             head = head->next;
+//         }
+        
+//         int i = 0, j = vec.size()-1;
+//         int result = 0;
+        
+//         while(i < j) {
+//             result = max(result, vec[i] + vec[j]);
+//             i++;
+//             j--;
+//         }
+        
+//         return result;
+//     }
+// };
+
+
+// second aaproach by using stack
+
+
 class Solution {
 public:
     int pairSum(ListNode* head) {
-        vector<int> vec;
+        stack<int> st;
+        ListNode* curr = head;
         
-        while(head) {
-            vec.push_back(head->val);
-            head = head->next;
+        while(curr) {
+            st.push(curr->val);
+            curr = curr->next;
         }
         
-        int i = 0, j = vec.size()-1;
+        curr = head;
+        int count = 1;
+        int N = st.size();
         int result = 0;
         
-        while(i < j) {
-            result = max(result, vec[i] + vec[j]);
-            i++;
-            j--;
+        while(count <= N/2) {
+            result = max(result, curr->val + st.top());
+            curr = curr->next;
+            st.pop();
+            count++;
         }
         
         return result;
